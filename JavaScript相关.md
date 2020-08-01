@@ -1,34 +1,32 @@
 # JS的语言组成
 
-- 基本语法：C
-- 数据类型 内存管理：Java
-- 函数式编程：Scheme 函数是第一等公民
-- 原型继承：Self 基于原型prototype的继承机制
+* 基本语法：C
+* 数据类型 内存管理：Java
+* 函数式编程：Scheme 函数是第一等公民
+* 原型继承：Self 基于原型prototype的继承机制
 
 # 奇葩的JS
 
-
-
-```javascript
-('b'+'a'+ + 'a'+'a'+ +'').toLowerCase()//"banana0"
+``` javascript
+('b' + 'a' + +'a' + 'a' + +'').toLowerCase() //"banana0"
 0 == '0' //true
 0 == [] //true
 '0' == [] //false
 typeof NaN //number
-99999999999//100000000000
-0.1+0.2==0.3//false 精度丢失
-Math.max()//-Infinity 负无穷
-Math.min()//Infinity 正无穷
+99999999999 //100000000000
+0.1 + 0.2 == 0.3 //false 精度丢失
+Math.max() //-Infinity 负无穷
+Math.min() //Infinity 正无穷
 [] + [] //""
 [] + {} //"[object object]"
 {} + [] // 0
-true + true + true===3 //true
+true + true + true === 3 //true
 true - true //0
-(!+[]+[]+![]).length//9 "truefalse"
+(!+[] + [] + ![]).length //9 "truefalse"
 9 + "1" //91
 91 - "1" //90
 [] == false //true
-0==false //true
+0 == false //true
 undefined == false //true
 NaN == false //true
 "" == false //true 包括多空格
