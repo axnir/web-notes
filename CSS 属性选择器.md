@@ -1,5 +1,5 @@
 # CSS 属性选择器 *=, |=, ^=, $=, *= 的区别
-1. **attribute中包含value**
+1. **attribute 中包含 value:**
     
     * [attribute~=value] 属性中包含独立的单词为 value，例如：
         ```html
@@ -9,7 +9,7 @@
         ```html
         [title*=flower]   -->  <img src="/i/eg_tulip.jpg" title="ffffflowerrrrrr" />
         ```
-2. **attibute 以 value 开头：**
+2. **attibute 以 value 开头:**
     
     * [attribute|=value] 属性中必须是完整且唯一的单词，或者以 - 分隔开，例如：
         ```html
