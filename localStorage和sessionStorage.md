@@ -1,6 +1,6 @@
 # localStorage和sessionStorage
 
-这两者都是用来存储客户端临时信息的对象
+这两者都是用来存储客户端临时信息的对象,储存在客户端
 
 * `localStorage`声明周期是永久，除非用户主动在浏览器上清除`localStorage`信息，否则这些信息将永远存在
 * `sessionStorage`生命周期为当前窗口或标签页，一旦窗口或标签页被永久关闭了，那么所有通过`sessionStorage`存储的数据也就被清空了
