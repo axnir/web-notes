@@ -3,8 +3,8 @@
 | 生命周期钩子  |                           组件状态                           |                          最佳实践                           |
 | :-----------: | :----------------------------------------------------------: | :---------------------------------------------------------: |
 | beforeCreate  | 实例初始化后，this指向创建的实例，不能访问到data、computed、watch、methods上的方法和数据 |                  常用于初始化非响应式变量                   |
-|    created    | 实例创建完成，可访问methods、data、computed、watch上的方法和数据，为挂载到DOM，不能访问$el属性，$ref属性内容为空数组 |               用于页面初始化，简单的ajax请求                |
-|  beforeMount  | 在挂载开始之前被调用，brforeMount之前，会找到对应的template，并编译成render函数 |                              -                              |
+|    created    | 实例创建完成，可访问methods、data、computed、watch上的方法和数据，未挂载到DOM，不能访问$el属性，$ref属性内容为空数组 |               用于页面初始化，简单的ajax请求                |
+|  beforeMount  | 在挂载开始之前被调用，beforeMount之前，会找到对应的template，并编译成render函数 |                              -                              |
 |    mounted    | 实例挂载到DOM上，此时可以通过DOM API获取到DOM节点，$ref属性可以访问 |             常用于获取VNode信息和操作，ajax请求             |
 | beforeUpdate  |        响应式数据更新时调用，发生在虚拟DOM打补丁之前         | 适合在更新之前访问现有的DOM，比如手动移除已添加的事件监听器 |
 |    updated    | 虚拟 DOM 重新渲染和打补丁之后调用，组件DOM已经更新，可执行依赖于DOM的操作 |        避免在这个钩子函数中操作数据，可能陷入死循环         |

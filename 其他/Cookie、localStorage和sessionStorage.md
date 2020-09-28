@@ -35,11 +35,13 @@
 		</tr>
 		<tr>
 			<td>易用性</td>
-			<td>需要程序员自己封装，源生的Cookie接口不友好</td>
-			<td colspan="2">源生接口可以接受，亦可再次封装来对Object和Array有更好的支持</td>
+			<td>需要程序员自己封装，原生的Cookie接口不友好</td>
+			<td colspan="2">原生接口可以接受，亦可再次封装来对Object和Array有更好的支持</td>
 		</tr>
 	</tbody>
 </table>
+
+
  		不同浏览器无法共享`localStorage`或`sessionStorage`中的信息。相同浏览器的不同页面间可以共享相同的 `localStorage`（页面属于相同域名和端口），但是不同页面或标签页间无法共享`sessionStorage`的信息。这里需要注意的是，页面及标签页仅指顶级窗口，如果一个标签页包含多个`iframe`标签且他们属于同源页面，那么他们之间是可以共享`sessionStorage`的。
 
 * `Cookie`的使用方法
