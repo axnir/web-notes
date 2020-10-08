@@ -96,8 +96,38 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 
 ## 浏览器渲染过程
 
-1. 解析HTML生成DOM树。
-2. 解析CSS生成CSS规则树。
-3. 将DOM树与CSS规则树合并在一起生成渲染树（render tree）。
+1. 解析HTML生成DOM Tree。
+2. 解析CSS生成CSSOM Rule Tree。
+3. 将DOM Tree与CSSOM Rule Tree合并在一起生成渲染树（render tree）。
 4. 遍历渲染树开始布局，计算每个节点的位置大小信息。
 5. 将渲染树每个节点绘制到屏幕。
+
+## display的值及作用
+
+
+- block	块类型。默认宽度为父元素宽度，可设置宽高，换行显示。
+- none	元素不显示，并从文档流中移除。
+- inline	行内元素类型。默认宽度为内容宽度，不可设置宽高，同行显示。
+- inline-block 默认宽度为内容宽度，可以设置宽高，同行显示。
+- list-item	像块类型元素一样显示，并添加样式列表标记。
+- table	此元素会作为块级表格来显示。
+- inherit	规定应该从父元素继承display属性的值。
+
+## position 的值 relative 和 absolute 定位原点
+
+- absolute
+生成绝对定位的元素，相对于值不为static的第一个父元素的padding box进行定位，也可以理解为离自己这一级元素最近的
+一级position设置为absolute或者relative的父元素的padding box的左上角为原点的。
+
+- fixed（老IE不支持）
+生成绝对定位的元素，相对于浏览器窗口进行定位。
+
+- relative
+生成相对定位的元素，相对于其元素本身所在正常位置进行定位。
+
+- static
+默认值。没有定位，元素出现在正常的流中（忽略top,bottom,left,right,z-index声明）。
+
+- inherit
+规定从父元素继承position属性的值。
+
