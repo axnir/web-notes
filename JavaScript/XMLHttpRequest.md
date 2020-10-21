@@ -6,7 +6,7 @@ const oAjax = new XMLHttpRequest()
 // 2.设置请求参数。open(方法,url,是否异步)
 oAjax.open('get','a.md',true)
 // 3.发送请求
-oAjax.send()
+oAjax.send(null)
 // 4.注册时间。onreadystatechange事件，状态改变时调用
 oAjax.onreadystatechange = function () {
         /* 
