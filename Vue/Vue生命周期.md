@@ -20,3 +20,5 @@
    完毕，可以用`vm.nextTick`
 
 3. vue2.0之后主动调用$destroy()不会移除dom节点，作者不推荐直接destroy这种做法，如果实在需要这样用可以在这个生命周期钩子中手动移除dom节点
+
+<img src="..\pics\vue生命周期.png" alt="Vue生命周期" style="zoom:30%;" />
