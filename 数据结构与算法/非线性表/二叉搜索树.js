@@ -1,0 +1,170 @@
+// 用于实例化节点的类
+class Node {
+    constructor (key) {
+        this.key = key // 节点的键值
+        this.left = null // 指向左节点的指针
+        this.right = null // 指向右节点的指针
+    }
+}
+// 二叉搜索树
+class BinarySearchTree {
+    constructor () {
+        this.root = null // 将根节点置为null
+    }
+
+    /*
+        insert 方法，向树中插入一个新的键。
+        遍历树，将插入节点的键值与遍历到的节点键值比较，如果前者大于后者，继续递归遍历右子节点
+        反之，继续遍历左子节点，直到找到一个空的节点，在该位置插入。
+    */
+    insert (key) {
+        let newNode = new Node(key) // 实例化一个新节点
+        if (this.root === null) {
+            this.root = newNode // 如果树为空，直接将该节点作为根节点
+        } else {
+            this.insertNode(this.root, newNode) // 插入节点（传入根节点作为参数）
+        }
+    }
+
+    // 插入结点的函数
+    insertNode (node, newNode) {
+        // 如果插入节点的键值小于当前节点的键值
+        // （第一次执行insertNode函数时，当前节点就是根节点）
+        if (newNode.key < node.key) {
+            if (node.left === null) {
+                // 如果当前节点的左子节点为空，就直接在改左子节点处插入
+                node.left = newNode
+            } else {
+                // 如果左子节点不为空，需要继续执行insertNode函数，
+                // 将要插入的节点与左子节点的后代继续比较，直到找到能够插入的位置
+                this.insertNode(node.left, newNode)
+            }
+        } else {
+            // 如果插入节点的键值大于当前节点的键值
+            // 处理过程类似，只是insertNode函数继续比较的是右子节点
+            if (node.right === null) {
+                node.right = newNode
+            } else {
+                this.insertNode(node.right, newNode)
+            }
+        }
+    }
+
+    /* 
+        搜索最小值
+        在二叉搜索树里，不管是整个树还是其子树，最小值一定在树最左侧的最底层。
+        因此给定一颗树或其子树，只需要一直向左节点遍历到底就行了。
+    */
+    min (node = this.root) {
+        // min方法允许传入子树
+        while (node && node.left !== null) {
+            node = node.left
+        }
+        return node
+    }
+
+    // 搜索最大值
+    // 搜索最大值与搜索最小值类似，只是沿着树的右侧遍历。
+    max (node = this.root) {
+        // max方法允许传入子树
+        // 一直遍历右侧子节点，直到底部
+        while (node && node.right !== null) {
+            node = node.right;
+        }
+        return node;
+    }
+
+    /*
+        搜索特定值
+        搜索特定值的处理与插入值的处理类似。
+        遍历树，将要搜索的值与遍历到的节点比较，如果前者大于后者，则递归遍历右侧子节点
+        反之，则递归遍历左侧子节点。
+    */
+    search (key, node = this.root) {
+        // 如果node是null，说明树中没有要查找的值，返回false
+        if (node === null) {
+            return false
+        }
+        if (key < node.key) {
+            return this.search(key, node.left)
+        } else if (key > node.key) {
+            return this.search(key, node.right)
+        } else {
+            return node
+        }
+    }
+
+    /*
+        移除节点
+        移除节点，首先要在树中查找到要移除的节点，
+        再判断该节点是否有子节点、有一个子节点或者有两个子节点，最后分别处理。
+    */
+    remove (key, node = this.root) {
+        // 如果 node 不存在，直接返回
+        if (node === null) return false
+        // 找到要删除的节点
+        node = this.search(key, node)
+
+        // 第一种情况，该节点没有子节点
+        if (node.left === null && node.right === null) {
+            node = null
+            return node
+        }
+        // 第二种情况，该节点只有一个子节点的节点
+        if (node.left === null) {
+            // 只有右节点
+            node = node.right
+            return node
+        } else if (node.right === null) {
+            // 只有左节点
+            node = node.left
+            return node
+        }
+        // 第三种情况，有有两个子节点的节点
+        // 将右侧子树中的最小值，替换到要删除的位置
+        // 找到最小值
+        let aux = this.min(node.right)
+        // 替换
+        node.key = aux.key
+        // 删除最小值
+        node.right = this.remove(aux.key, node.right)
+        return node
+    }
+
+    // 先序遍历
+    // callback用于对遍历到的节点做操作
+    preOrderTraverse (callback, node = this.root) {
+        // 遍历到node为null为止
+        if (node !== null) {
+            callback(node.key)
+            this.preOrderTraverse(callback, node.left)
+            this.preOrderTraverse(callback, node.right)
+        }
+    }
+
+    // 中序遍历
+    // callback用于对遍历到的节点做操作
+    inOrderTraverse (callback, node = this.root) {
+        if (node !== null) {
+            this.inOrderTraverse(callback, node.left)
+            callback(node.key)
+            this.inOrderTraverse(callback, node.right)
+        }
+    }
+
+    // 中序遍历
+    // callback用于对遍历到的节点做操作
+    postOrderTraverse (callback, node = this.root) {
+        if (node !== null) {
+            this.postOrderTraverse(callback, node.left)
+            this.postOrderTraverse(callback, node.right)
+            callback(node.key)
+        }
+    }
+
+    // 打印
+    print () {
+        console.log('root :', this.root)
+        return this.root
+    }
+}
