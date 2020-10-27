@@ -1,0 +1,30 @@
+# CSS3新增伪类
+
+- :root 选择文档的根元素，等同于 html 元素
+- :empty 选择没有子元素的元素
+- :target 选取当前活动的目标元素
+- :not(selector) 选择除 selector 元素以外的元素
+- :enabled 选择可用的表单元素
+- :disabled 选择禁用的表单元素
+- :checked 选择被选中的表单元素
+- :after 选择器在被选元素的内容后面插入内容
+- :before 选择器在被选元素的内容前面插入内容
+- :nth-child(n) 匹配父元素下指定子元素，在所有子元素中排序第 n
+- :nth-last-child(n) 匹配父元素下指定子元素，在所有子元素中排序第 n，从后向前数
+- :nth-child(odd) 奇数
+- :nth-child(even) 偶数
+- :nth-child(3n+1)
+- :first-child
+- :last-child
+- :only-child
+- :nth-of-type(n) 匹配父元素下指定子元素，在同类子元素中排序第 n
+- :nth-last-of-type(n) 匹配父元素下指定子元素，在同类子元素中排序第 n，从后向前数
+- :nth-of-type(odd)
+- :nth-of-type(even)
+- :nth-of-type(3n+1)
+- :first-of-type
+- :last-of-type
+- :only-of-type
+- ::selection 选择被用户选取的元素部分
+- :first-line 选择元素中的第一行
+- :first-letter 选择元素中的第一个字符

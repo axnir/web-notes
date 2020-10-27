@@ -6,3 +6,34 @@
 4. 如果无返回值或者返回一个非对象值，则将 `obj` 返回作为新对象；如果返回值是一个对象的话那么直接直接返回该对象。
 
 在 `new` 的过程中，我们是使用 `call` 改变了 `this` 的指向
+
+##### 手写new
+
+```javascript
+function myNew(func, ...args) {
+  // 1. 判断方法体
+  if (typeof func !== 'function') {
+    throw '第一个参数必须是方法体'
+  }
+
+  // 2. 创建新对象
+  const obj = {}
+
+  // 3. 这个对象的 __proto__ 指向 func 这个类的原型对象
+  // 即实例可以访问构造函数原型（constructor.prototype）所在原型链上的属性
+  obj.__proto__ = Object.create(func.prototype)
+  // 为了兼容 IE 可以让步骤 2 和 步骤 3 合并
+  // const obj = Object.create(func.prototype)
+
+  // 4. 通过 apply 绑定 this 执行并且获取运行后的结果
+  let result = func.apply(obj, args)
+  
+  // 5. 如果构造函数返回的结果是引用数据类型，则返回运行后的结果
+  // 否则返回新创建的 obj
+  const isObject = typeof result === 'object' && typeof result !== null
+  const isFunction = typeof result === 'function'
+
+  return isObject || isFunction ? result : obj
+}
+```
+
