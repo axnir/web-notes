@@ -1,14 +1,22 @@
 # AJAX XMLHttpRequest使用
-### get请求
+
+> 通过 `Promise` 实现 `ajax`
+
+#### get请求
 ``` javascript
-// 1.创建XMLHttpRequest对象
-const oAjax = new XMLHttpRequest()
-// 2.设置请求参数。open(方法,url,是否异步)
-oAjax.open('get','a.md',true)
-// 3.发送请求
-oAjax.send(null)
-// 4.注册时间。onreadystatechange事件，状态改变时调用
-oAjax.onreadystatechange = function () {
+const getData = (url) => {
+  return new Promise((resolve, reject) => {
+    // 设置 XMLHttpRequest 请求
+    const xhr = new XMLHttpRequest()
+
+    // 设置请求方法和 url
+    xhr.open('GET', url)
+
+    // 设置请求头
+    xhr.setRequestHeader('Accept', 'application/json')
+
+    // 设置请求的时候，readyState 属性变化的一个监控
+    xhr.onreadystatechange = () => {
         /* 
         属性：请求状态
             0: 未初始化 还没有调用 open() 方法
@@ -17,16 +25,26 @@ oAjax.onreadystatechange = function () {
             3: 解析 正在解析响应内容
             4: 完成 响应内容解析完成，可以在客户端调用了
         */
-        if (oAjax.readyState === 4) {
-            if (oAjax.status === 200) {
-                fnSucc(oAjax.responseText)
-            } else {
-                fnFaild(oAjax.status)
-            }
-        }
+
+      // 如果请求的 readyState 不为 4，说明还没请求完毕
+      if (xhr.readyState !== 4) {
+        return
+      }
+
+      // 如果请求成功（200），那么 resolve 它，否则 reject 它
+      if (xhr.status === 200) {
+        resolve(xhr.responseText)
+      } else {
+        reject(new Error(xhr.responseText))
+      }
+    }
+
+    // 发送请求
+    xhr.send()
+  })
 }
 ```
-### post请求
+#### post请求
 ```javascript
 // 1.创建XMLHttpRequest对象
 const oAjax = new XMLHttpRequest()
