@@ -1,6 +1,6 @@
 # Vue面试题
 
-### 对SPA单页面的理解
+### 对 SPA 单页面的理解
 
 > SPA（ single-page application ）仅在 Web 页面初始化时加载相应的 HTML、JavaScript 和 CSS。一旦页面加载完成，SPA 不会因为用户的操作而进行页面的重新加载或跳转；取而代之的是利用路由机制实现 HTML 内容的变换，UI 与用户的交互，避免页面的重新加载。
 
@@ -15,7 +15,7 @@
 - 前进后退路由管理：由于单页应用在一个页面中显示所有内容，所以不能使用路由器前进后退功能，所有页面切换需要自己建立堆栈管理
 - SEO难度大：所有的内容都在一个页面中动态替换显示
 
-### v-show与v-if有什么区别
+###  v-show 与 v-if 有什么区别
 
 **v-if**是真正的条件渲染，因为他会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建；也是**惰性的**：因为在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时才会开始渲染条件块。
 
@@ -23,7 +23,7 @@
 
 所以，v-if适用于在运行时很少改变条件，不需要频繁切换条件的场景；v-show则适合于需要非常频繁切换条件的场景。
 
-### Class与Style如何动态绑定
+### Class 与 Style 如何动态绑定
 
 Class可以通过对象语法和数组语法进行动态绑定：
 
@@ -199,3 +199,133 @@ Model层：
 }
 ```
 
+### Vue 生命周期
+
+> Vue 实例有一个完整的生命周期，也就是从开始创建、初始化数据、编译模版、挂载 Dom -> 渲染、更新 -> 渲染、卸载等一系列过程，我们称这是 Vue 的生命周期。
+
+| 生命周期钩子  |                           组件状态                           |                          最佳实践                           |
+| :-----------: | :----------------------------------------------------------: | :---------------------------------------------------------: |
+| beforeCreate  | 实例初始化后，this指向创建的实例，不能访问到data、computed、watch、methods上的方法和数据 |                  常用于初始化非响应式变量                   |
+|    created    | 实例创建完成，可访问methods、data、computed、watch上的方法和数据，未挂载到DOM，不能访问$el属性，$ref属性内容为空数组 |               用于页面初始化，简单的ajax请求                |
+|  beforeMount  | 在挂载开始之前被调用，beforeMount之前，会找到对应的template，并编译成render函数 |                              -                              |
+|    mounted    | 实例挂载到DOM上，此时可以通过DOM API获取到DOM节点，$ref属性可以访问 |             常用于获取VNode信息和操作，ajax请求             |
+| beforeUpdate  |        响应式数据更新时调用，发生在虚拟DOM打补丁之前         | 适合在更新之前访问现有的DOM，比如手动移除已添加的事件监听器 |
+|    updated    | 虚拟 DOM 重新渲染和打补丁之后调用，组件DOM已经更新，可执行依赖于DOM的操作 |        避免在这个钩子函数中操作数据，可能陷入死循环         |
+|   activated   |              keep-alive 专属，组件被激活时调用               |                              -                              |
+|  deactivated  |              keep-alive 专属，组件被销毁时调用               |                              -                              |
+| beforeDestroy | 实例销毁之前调用。这一步，实例仍然完全可用，this仍能获取到实例 |     常用于销毁定时器、解绑全局事件、销毁插件对象等操作      |
+|   destroyed   | 实例销毁后调用，调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁 |                              -                              |
+
+**注意**
+
+1. `created`阶段的ajax请求与`mounted`请求的区别：前者页面视图未出现，如果请求信息过多，页面会长时间处于白屏状态。
+
+2. `mounted` 不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用`vm.nextTick`。
+
+3. Vue2.0 之后主动调用 `$destroy()` 不会移除dom节点，作者不推荐直接 `destroy` 这种做法，如果实在需要这样用可以在这个生命周期钩子中手动移除dom节点。
+
+<img src="..\pics\vue生命周期.png" alt="Vue生命周期" style="zoom:30%;" />
+
+### Vue 的父组件和子组件生命周期钩子函数执行顺序
+
+Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为以下 4 部分：
+
+- 加载渲染过程
+
+  父 beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子 created -> 子 beforeMount -> 子 mounted -> 父 mounted
+
+- 子组件更新过程
+
+  父 beforeUpdate -> 子 beforeUpdate -> 子 updated -> 父 updated
+
+- 父组件更新过程
+
+  父 beforeUpdate -> 父 updated
+
+- 销毁过程
+
+  父 beforeDestroy -> 子 beforeDestroy -> 子 destroyed -> 父 destroyed
+
+### 组件的keep-alive
+
+> keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，避免重新渲染。
+
+- 一般结合路由和动态组件一起使用，用于缓存组件。
+
+- 提供 include 和 exclude 属性，两者都支持字符串或正则表达式， include 表示只有名称匹配的组件会被缓存，exclude 表示任何名称匹配的组件都不会被缓存 ，其中 exclude 的优先级比 include 高。
+
+- 对应两个钩子函数 activated 和 deactivated ，当组件被激活时，触发钩子函数 activated，当组件被移除时，触发钩子函数 deactivated。
+
+### Vue 组件间通信
+
+> Vue 组件间通信只要指以下 3 类通信：父子组件通信、隔代组件通信、兄弟组件通信。
+
+1. **` props / $emit `适用 父子组件通信 **
+
+2. **`ref` 与 `$parent / $children` 适用 父子组件通信**
+
+- ` ref `：如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
+- ` $parent / $children `：访问父 、 子实例
+
+3. **`EventBus （$emit / $on）` 适用于 父子、隔代、兄弟组件通信**
+
+   通过一个空的 Vue 实例作为中央事件总线（事件中心），用它来触发事件和监听事件，从而实现任何组件间的通信，包括父子、隔代、兄弟组件。
+
+4. **`$attrs / $listeners` 适用于 隔代组件通信**
+
+- `$attrs`：包含了父作用域中不被 prop 所识别 (且获取) 的特性绑定 ( class 和 style 除外 )。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 ( class 和 style 除外 )，并且可以通过 `v-bind="$attrs"` 传入内部组件。通常配合 inheritAttrs 选项一起使用。
+- `$listeners`：包含了父作用域中的 (不含 .native 修饰器的)  v-on 事件监听器。它可以通过 `v-on="$listeners"` 传入内部组件
+
+5. **`provide / inject` 适用于 隔代组件通信**
+
+   祖先组件中通过 `provide` 来提供变量，然后在子孙组件中通过 `inject` 来注入变量。 `provide / inject `API 主要解决了跨级组件间的通信问题，不过它的使用场景，主要是子组件获取上级组件的状态，跨级组件间建立了一种主动提供与依赖注入的关系。
+
+6. **Vuex 适用于 父子、隔代、兄弟组件通信**
+
+   Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。
+
+- Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
+- 改变 store 中的状态的唯一途径就是显式地提交  (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
+
+### vue-router 中常用的 hash 和 history 路由模式实现原理
+
+##### hash 模式的实现原理
+
+> 早期的前端路由的实现就是基于 location.hash 来实现的。其实现原理很简单，location.hash 的值就是 URL 中 # 后面的内容。
+
+hash 路由模式的实现主要是基于下面几个特性：
+
+- URL 中 hash 值只是客户端的一种状态，也就是说当向服务器端发出请求时，hash 部分不会被发送；
+
+- hash 值的改变，都会在浏览器的访问历史中增加一个记录。因此我们能通过浏览器的回退、前进按钮控制hash 的切换；
+
+- 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用  JavaScript 来对 loaction.hash 进行赋值，改变 URL 的 hash 值；
+
+- 可以使用 hashchange 事件来监听 hash 值的变化，从而对页面进行跳转（渲染）。
+
+##### history 模式的实现原理
+
+> HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：history.pushState() 和 history.repalceState()。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：
+>
+> ```javascript
+> window.history.pushState(null, null, path)
+> window.history.replaceState(null, null, path)
+> ```
+
+history 路由模式的实现主要基于存在下面几个特性：
+
+- ` pushState ` 和 ` repalceState ` 两个 API 来操作实现 URL 的变化 ；
+- 我们可以使用 ` popstate `  事件来监听 url 的变化，从而对页面进行跳转（渲染）；
+- ` history.pushState() ` 或 ` history.replaceState() ` 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）。
+
+### 虚拟 DOM 的优缺点
+
+##### 优点：
+
+- **保证性能下线：**框架的虚拟 DOM 需要适配任何上层 API 可能产生的操作，它的一些 DOM 操作的实现必须是普适的，所以它的性能并不是最优的；但是比起粗暴的 DOM 操作性能要好很多，因此框架的虚拟 DOM 至少可以保证在你不需要手动优化的情况下，依然可以提供还不错的性能，即保证性能的下限；
+- **无需手动操作 DOM ：**我们不再需要手动去操作 DOM，只需要写好 View-Model 的代码逻辑，框架会根据虚拟 DOM 和 数据双向绑定，帮我们以可预期的方式更新视图，极大提高我们的开发效率；
+- **跨平台：**虚拟 DOM 本质上是 JavaScript 对象,而 DOM 与平台强相关，相比之下虚拟 DOM 可以进行更方便地跨平台操作，例如服务器渲染、weex 开发等等。
+
+##### 缺点：
+
+- **无法进行极致优化：** 虽然虚拟 DOM + 合理的优化，足以应对绝大部分应用的性能需求，但在一些性能要求极高的应用中虚拟 DOM 无法进行针对性的极致优化。

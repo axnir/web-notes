@@ -8,7 +8,7 @@
 - 子向父传值：`v-on`事件绑定 `$emit`监听
 - 姐妹组件之间共享数据：`EventBus`
   	- `$on`接收数据的组件
-  	- `$emit`发送数据的组件
+    - `$emit`发送数据的组件
 
 - 使用Vuex，Vuex是实现组件全局状态（数据）管理的一种机制，可以方便的实现组件之间数据的共享
 
@@ -64,8 +64,7 @@ Mutation用于变更Store中的数据
 ###### 触发Mutation的方式
 
   - ```javascript
-
-    // 定义Mutation
+// 定义Mutation
     const store = new Vuex.Store({
         state: {
             count: 0
