@@ -8,16 +8,16 @@
 ##### 手写new
 
 ```javascript
-function myNew(func, args) {
+function myNew(func, ...args) {
   // 1. 判断方法体
   if (typeof func !== 'function') {
     throw '第一个参数必须是方法体'
   }
 
-  // 2. 创建新对象
+  // 2. 创建新对象 obj
   const obj = {}
 
-  // 3. 这个对象的 __proto__ 指向 func 这个类的原型对象
+  // 3. obj 的 __proto__ 指向 func 这个类的原型对象
   // 即实例可以访问构造函数原型（constructor.prototype）所在原型链上的属性
   obj.__proto__ = Object.create(func.prototype)
 
@@ -25,11 +25,11 @@ function myNew(func, args) {
   let result = func.call(obj, ...args)
   
   // 5. 如果构造函数返回的结果是引用数据类型，则返回运行后的结果
+  if (result && (typeof result === 'object' || typeof result === 'function')) {
+      return result
+  }
   // 否则返回新创建的 obj
-  const isObject = typeof result === 'object' && typeof result !== null
-  const isFunction = typeof result === 'function'
-
-  return isObject || isFunction ? result : obj
+  return obj
 }
 ```
 
