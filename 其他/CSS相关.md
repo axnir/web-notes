@@ -43,7 +43,7 @@
 * px是像素，绝对大小；rem/em是相对大小，rem基于根元素的font-size，em基于父元素(一般情况下，1em=16px)
 * vw、vh、vmax、vmin都是基于视口(viewport)，1vw是视口**宽度**的百分之一，1vh是视口**高度**的百分之一，1vmax、1vmin取视口**宽高最大或最小**的百分之一
 
-##  CSS定位方式position
+##  CSS 定位方式 position
 
 - static：默认值。正常流
 - realtive：相对定位，相对于正常位置

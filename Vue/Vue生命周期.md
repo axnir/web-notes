@@ -1,5 +1,7 @@
 # Vue生命周期
 
+### Vue2 生命周期
+
 | 生命周期钩子  |                           组件状态                           |                          最佳实践                           |
 | :-----------: | :----------------------------------------------------------: | :---------------------------------------------------------: |
 | beforeCreate  | 实例初始化后，this指向创建的实例，不能访问到data、computed、watch、methods上的方法和数据 |                  常用于初始化非响应式变量                   |
@@ -22,3 +24,34 @@
 3. Vue2.0 之后主动调用 `$destroy()` 不会移除dom节点，作者不推荐直接 `destroy` 这种做法，如果实在需要这样用可以在这个生命周期钩子中手动移除dom节点。
 
 <img src="..\pics\vue生命周期.png" alt="Vue生命周期" style="zoom:30%;" />
+
+### Vue3 周期
+
+- setup() :开始创建组件之前，在`beforeCreate`和`created`之前执行。创建的是`data`和`method`。
+- onBeforeMount() : 组件挂载到节点上之前执行的函数。
+- onMounted() : 组件挂载完成后执行的函数。
+- onBeforeUpdate(): 组件更新之前执行的函数。
+- onUpdated(): 组件更新完成之后执行的函数。
+- onBeforeUnmount(): 组件卸载之前执行的函数。
+- onUnmounted(): 组件卸载完成后执行的函数。
+- onActivated(): 被包含在`<keep-alive>`中的组件，会多出两个生命周期钩子函数。被激活时执行。
+- onDeactivated(): 比如从 A 组件，切换到 B 组件，A 组件消失时执行。
+- onErrorCaptured(): 当捕获一个来自子孙组件的异常时激活钩子函数（以后用到再讲，不好展现）。
+
+与 vue2 的对应关系
+
+```js
+Vue2---------------Vue3
+beforeCreate  -> setup()
+created       -> setup()
+beforeMount   -> onBeforeMount
+mounted       -> onMounted
+beforeUpdate  -> onBeforeUpdate
+updated       -> onUpdated
+beforeDestroy -> onBeforeUnmount
+destroyed     -> onUnmounted
+activated     -> onActivated
+deactivated   -> onDeactivated
+errorCaptured -> onErrorCaptured
+```
+
