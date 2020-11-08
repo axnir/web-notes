@@ -6,19 +6,19 @@
 ### 值变量
 ```less
 /* Less */
-      @color: #999;
-      @bgColor: skyblue;//不要添加引号
-      @width: 50%;
-      #wrap {
-        color: @color;
-        width: @width;
-      }
-    
-      /* 生成后的 CSS */
-      #wrap {
-        color: #999;
-        width: 50%;
-      }
+@color: #999;
+@bgColor: skyblue;//不要添加引号
+@width: 50%;
+#wrap {
+  color: @color;
+  width: @width;
+}
+
+/* 生成后的 CSS */
+#wrap {
+  color: #999;
+  width: 50%;
+}
 
 ```
 以 @ 开头 定义变量，并且使用时 直接 键入 @名称。
@@ -26,151 +26,151 @@
 在平时工作中，我们就可以把 常用的变量 封装到一个文件中，这样利于代码组织维护。
 ```less
 @lightPrimaryColor: #c5cae9;
-      @textPrimaryColor: #fff;
-      @accentColor: rgb(99, 137, 185);
-      @primaryTextColor: #646464;
-      @secondaryTextColor: #000;
-      @dividerColor: #b6b6b6;
-      @borderColor: #dadada;
+@textPrimaryColor: #fff;
+@accentColor: rgb(99, 137, 185);
+@primaryTextColor: #646464;
+@secondaryTextColor: #000;
+@dividerColor: #b6b6b6;
+@borderColor: #dadada;
 ```
 ### 选择器变量
 ```less
 /* Less */
-      @mySelector: #wrap;
-      @Wrap: wrap;
-      @{mySelector}{ //变量名 必须使用大括号包裹
-        color: #999;
-        width: 50%;
-      }
-      .@{Wrap}{
-        color:#ccc;
-      }
-      #@{Wrap}{
-        color:#666;
-      }
-    
-      /* 生成的 CSS */
-      #wrap{
-        color: #999;
-        width: 50%;
-      }
-      .wrap{
-        color:#ccc;
-      }
-      #wrap{
-        color:#666;
-      }
+@mySelector: #wrap;
+@Wrap: wrap;
+@{mySelector}{ //变量名 必须使用大括号包裹
+  color: #999;
+  width: 50%;
+}
+.@{Wrap}{
+  color:#ccc;
+}
+#@{Wrap}{
+  color:#666;
+}
+
+/* 生成的 CSS */
+#wrap{
+  color: #999;
+  width: 50%;
+}
+.wrap{
+  color:#ccc;
+}
+#wrap{
+  color:#666;
+}
 ```
 ### 属性变量
 可减少代码书写量
 ```less
 /* Less */
-      @borderStyle: border-style;
-      @Soild:solid;
-      #wrap{
-        @{borderStyle}: @Soild;//变量名 必须使用大括号包裹
-      }
-    
-      /* 生成的 CSS */
-      #wrap{
-        border-style:solid;
-      }
+@borderStyle: border-style;
+@Soild:solid;
+#wrap{
+  @{borderStyle}: @Soild;//变量名 必须使用大括号包裹
+}
+
+/* 生成的 CSS */
+#wrap{
+  border-style:solid;
+}
 ```
 ### url变量
 项目结构改变时，修改其变量即可。
 ```less
 /* Less */
-      @images: "../img";//需要加引号
-      body {
-        background: url("@{images}/dog.png");//变量名 必须使用大括号包裹
-      }
-    
-      /* 生成的 CSS */
-      body {
-        background: url("../img/dog.png");
-      }
+@images: "../img"; // 需要加引号
+body {
+  background: url("@{images}/dog.png"); // 变量名 必须使用大括号包裹
+}
+
+/* 生成的 CSS */
+body {
+  background: url("../img/dog.png");
+}
 ```
 ### 声明变量
 有点类似于 下面的 **混合方法**
 ```less
 - 结构: @name: { 属性: 值 ;};
-      - 使用：@name();
+- 使用：@name();
 /* Less */
-      @background: {background:red;};
-      #main{
-          @background();
-      }
-      @Rules:{
-          width: 200px;
-          height: 200px;
-          border: solid 1px red;
-      };
-      #con{
-        @Rules();
-      }
-    
-      /* 生成的 CSS */
-      #main{
-        background:red;
-      }
-      #con{
-        width: 200px;
-        height: 200px;
-        border: solid 1px red;
-      }
+@background: {background:red;};
+#main{
+  @background();
+}
+@Rules:{
+    width: 200px;
+    height: 200px;
+    border: solid 1px red;
+  };
+#con{
+  @Rules();
+}
+
+/* 生成的 CSS */
+#main{
+  background:red;
+}
+#con{
+  width: 200px;
+  height: 200px;
+  border: solid 1px red;
+}
 ```
 ### 变量计算
 ```less
 - 加减法时 以第一个数据的单位为基准
-  - 乘除法时 注意单位一定要统一
+ - 乘除法时 注意单位一定要统一
 /* Less */
-      @width:300px;
-      @color:#222;
-      #wrap{
-        width:@width-20;
-        height:@width-20*5;
-        margin:(@width-20)*5;
-        color:@color*2;
-        background-color:@color + #111;
-      }
-    
-      /* 生成的 CSS */
-      #wrap{
-        width:280px;
-        height:200px;
-        margin:1400px;
-        color:#444;
-        background-color:#333;
-      }
+@width:300px;
+@color:#222;
+#wrap{
+    width:@width-20;
+    height:@width-20*5;
+    margin:(@width-20)*5;
+    color:@color*2;
+    background-color:@color + #111;
+}
+
+/* 生成的 CSS */
+#wrap{
+    width:280px;
+    height:200px;
+    margin:1400px;
+    color:#444;
+    background-color:#333;
+}
 ```
 ### 变量作用域
 **就近原则**
 ```less
 /* Less */
-      @var: @a;
-      @a: 100%;
-      #wrap {
-        width: @var;
-        @a: 9%;
-      }
-    
-      /* 生成的 CSS */
-      #wrap {
-        width: 9%;
-      }
+@var: @a;
+@a: 100%;
+#wrap {
+    width: @var;
+    @a: 9%;
+}
+
+/* 生成的 CSS */
+#wrap {
+  	width: 9%;
+}
 ```
 ### 用变量去定义变量
 ```less
 /* Less */
-      @fnord:  "I am fnord.";
-      @var:    "fnord";
-      #wrap::after{
-        content: @@var; //将@var替换为其值 content:@fnord;
-      }
-      /* 生成的 CSS */
-      #wrap::after{
-        content: "I am fnord.";
-      }
+@fnord:  "I am fnord.";
+@var:    "fnord";
+#wrap::after{
+ 		content: @@var; //将@var替换为其值 content:@fnord;
+}
+/* 生成的 CSS */
+#wrap::after{
+ 	 content: "I am fnord.";
+}
 ```
 ## 嵌套
 ### &的妙用
