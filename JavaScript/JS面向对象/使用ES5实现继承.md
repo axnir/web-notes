@@ -43,7 +43,7 @@ SubType.prototype.sayAge = function() {
 
 ```javascript
 function inheritPrototype(subType,superType){
-    var prototype=Object.create(superType.prototype)
+    let prototype=Object.create(superType.prototype)
     prototype.constructor=subType
     subType.prototype=prototype
 }

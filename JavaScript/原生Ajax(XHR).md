@@ -6,11 +6,11 @@
 ``` javascript
 const getData = (url) => {
   return new Promise((resolve, reject) => {
-    // 设置 XMLHttpRequest 请求
+    // 创建 XMLHttpRequest 请求
     const xhr = new XMLHttpRequest()
 
-    // 设置请求方法和 url
-    xhr.open('GET', url)
+    // 设置请求参数。open(方法,url,是否异步)
+    xhr.open('GET', url, true)
 
     // 设置请求头
     xhr.setRequestHeader('Accept', 'application/json')
@@ -21,7 +21,7 @@ const getData = (url) => {
         属性：请求状态
             0: 未初始化 还没有调用 open() 方法
             1: 开始载入 已调用 send() 方法，正在发送请求
-            2: 载入完成send() 发送完成，已收到全部响应内容
+            2: 载入完成 send() 发送完成，已收到全部响应内容
             3: 解析 正在解析响应内容
             4: 完成 响应内容解析完成，可以在客户端调用了
         */
