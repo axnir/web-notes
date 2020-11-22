@@ -21,8 +21,8 @@ function myNew(func, ...args) {
   // 即实例可以访问构造函数原型（constructor.prototype）所在原型链上的属性
   obj.__proto__ = Object.create(func.prototype)
 
-  // 4. 通过 call 绑定 this 执行并且获取运行后的结果
-  let result = func.call(obj, ...args)
+  // 4. 通过 apply 绑定 this 执行并且获取运行后的结果
+  let result = func.apply(obj, args)
   
   // 5. 如果构造函数返回的结果是引用数据类型，则返回运行后的结果
   if (result && (typeof result === 'object' || typeof result === 'function')) {
