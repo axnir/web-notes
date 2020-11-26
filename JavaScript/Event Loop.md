@@ -4,11 +4,11 @@
 
 ####  MacroTask（宏任务）
 
-​	`script`全部代码、`setTimeout`、`setInterval`、`I/O`、`UI Rendering`
+​	`script(整体代码)`、`setTimeout`、`setInterval`、`I/O`、`UI Rendering`
 
 #### MicroTask（微任务）
 
-​	`Promise.then catch finally`、 `MutationObserver`、`Process.nextTick（Node独有）`
+​	`Promise.then catch finally`、 `MutationObserver`、`process.nextTick（Node独有）`
 
 ## 浏览器中的Event Loop
 

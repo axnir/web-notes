@@ -2,7 +2,7 @@
 
 #### 1.BFC(块级格式化上下文)
 
-> 块格式化上下文（Block Formatting Context，BFC）是Web页面的可视化CSS渲染的一部分，是布局过程中生成块级盒子的区域，也是浮动元素与其他元素的交互限定区域。
+> 块格式化上下文（Block Formatting Context，BFC）是一个独立的渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响。
 
 ###### 通俗来讲
 
@@ -27,7 +27,9 @@
 
 #### 2.选择器优先级
 
-内联 > ID选择器 > 类/属性/伪类选择器 > 标签选择器 /伪元素
+- `!important` > 内联 > ID选择器 > 类/属性/伪类选择器 > 标签选择器 /伪元素 > * > 继承 > 默认
+
+- 选择器 **从右往左** 解析
 
 ####  3.link和@import
 
@@ -104,10 +106,10 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 
 #### 11.浏览器渲染过程
 
-1. 解析HTML生成DOM Tree。
-2. 解析CSS生成CSSOM Rule Tree。
-3. 将DOM Tree与CSSOM Rule Tree合并在一起生成渲染树（render tree）。
-4. 遍历渲染树开始布局，计算每个节点的位置大小信息。
+1. 解析HTML生成DOM Tree；
+2. 解析CSS生成CSSOM Rule Tree；
+3. 将DOM Tree与CSSOM Rule Tree合并在一起生成渲染树（render tree）；
+4. 遍历渲染树开始布局，计算每个节点的位置大小信息；
 5. 将渲染树每个节点绘制到屏幕。
 
 #### 12.display的值及作用

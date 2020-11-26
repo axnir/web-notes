@@ -15,9 +15,28 @@
 
 刚开始客户端处于 `Closed` 的状态，服务器处于 `Listen` 状态。
 
-1. **客户端发送到服务器**。客户端发送 `SYN` 报文给服务器，并且指明客户端初始化序列号为 `ISN(c)`，即以 `SYN=1, seq=x` 的形式发送过去。此时客户端处于 `SYN_SEND` 状态。
-2. **服务器发送给客户端**。服务器收到客户端的 `SYN` 和 `ISN(c)`，也发送一个 `SYN` 回去，同时设置 `ACK = ISN(c) + 1` 以及指明服务器初始化序列号为 `ISN(s)`，即以 `SYN=1, ACK=x+1， seq=y` 的形式发送给客户端。
-3. **客户端发送到服务器**。客户端收到服务器发送的消息后，设置 `ACK = ISN(s) + 1`，将自身的 `ISN(c) + 1`，即以 `ACK=y+1, seq=x+1` 的形式发送给服务器。此时客户端处于 `ESTABLISHED` 阶段，服务器收到报文，也处于 `ESTABLISHED` 阶段，双方建立了连接。
+1. 第一次握手(SYN=1, seq=x):
+
+   客户端发送一个 TCP 的 SYN 标志位置1的包，指明客户端打算连接的服务器的端口，以及初始序号 X,保存在包头的序列号(Sequence Number)字段里。
+
+   发送完毕后，客户端进入 `SYN_SENT` 状态。
+
+2. 第二次握手(SYN=1, ACK=1, seq=y, ACKnum=x+1):
+
+   服务器发回确认包(ACK)应答。即 SYN 标志位和 ACK 标志位均为1。服务器端选择自己 ISN 序列号，放到 Seq 域里，同时将确认序号(Acknowledgement Number)设置为客户的 ISN 加1，即X+1。 
+
+   发送完毕后，服务器端进入 `SYN_RCVD` 状态。
+
+3. 第三次握手(ACK=1, seq = x+1, ACKnum=y+1)
+
+   客户端再次发送确认包(ACK)，SYN 标志位为0，ACK 标志位为1，并且把服务器发来 ACK 的序号字段+1，放在确定字段中发送给对方，并且在数据段放写ISN的+1
+
+   发送完毕后，客户端进入 `ESTABLISHED` 状态，当服务器端接收到这个包时，也进入 `ESTABLISHED` 状态，TCP 握手结束。
+
+#### 三次握手示意图
+<img src="..\pics\tcp-connection-made-three-way-handshake.png" alt="TCP 三次握手" style="zoom:50%;" />
+
+#### 四次挥手
 
 
 
