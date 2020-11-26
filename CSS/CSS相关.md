@@ -75,7 +75,15 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 
 `translate()`是`transform`的一个值，改变`translate`或`opacity`不会触发重流（reflow）和重绘（repaint），只会触发复合（compositions）。而绝对定位会触发。
 
-#### 10.Reflow和Repaint
+#### 10.浏览器渲染过程
+
+1. 解析HTML生成DOM Tree；
+2. 解析CSS生成CSSOM Rule Tree；
+3. 将DOM Tree与CSSOM Rule Tree合并在一起生成渲染树（render tree）；
+4. 遍历渲染树开始布局，计算每个节点的位置大小信息；
+5. 将渲染树每个节点绘制到屏幕。
+
+#### 11.Reflow和Repaint
 
 ###### Reflow：
 
@@ -86,7 +94,7 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 1. 一个 DOM 元素的几何属性变化，常见的几何属性有`width`、`height`、`padding`、`margin`、`left`、`top`、`border` 等等, 这个很好理解。
 2. 使 DOM 节点发生`增减`或者`移动`。
 3. 读写 `offset`族、`scroll`族和`client`族属性的时候，浏览器为了获取这些值，需要进行回流操作。
-4. 调用 `window.getComputedStyle` 方法。
+4. 调用 `getComputedStyle` 方法。
 
 ###### Repaint：
 
@@ -103,14 +111,6 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 5. 对于 resize、scroll 等进行防抖/节流处理。
 6. 避免频繁读取会引发回流/重绘的属性，如果确实需要多次使用，就用一个变量缓存起来。
 7. 利用 CSS3 的`transform`、`opacity`、`filter`这些属性可以实现合成的效果，也就是`GPU`加速。
-
-#### 11.浏览器渲染过程
-
-1. 解析HTML生成DOM Tree；
-2. 解析CSS生成CSSOM Rule Tree；
-3. 将DOM Tree与CSSOM Rule Tree合并在一起生成渲染树（render tree）；
-4. 遍历渲染树开始布局，计算每个节点的位置大小信息；
-5. 将渲染树每个节点绘制到屏幕。
 
 #### 12.display的值及作用
 
