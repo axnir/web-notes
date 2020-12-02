@@ -12,7 +12,7 @@
 
 ```javascript
 function SuperType() {
-    this.name = name;
+    this.name = name
     this.colors = ['red', 'blue', 'green']
 }
 SuperType.prototype.sayName = function() {
@@ -31,6 +31,18 @@ SubType.prototype.sayAge = function() {
 }
 ```
 
+##### 特点：
+
+1. 弥补了方式2的缺陷，可以继承实例属性/方法，也可以继承原型属性/方法
+2. 既是子类的实例，也是父类的实例
+3. 不存在引用属性共享问题
+4. 可传参
+5. 函数可复用
+
+##### 缺点：
+
+1. 调用了两次父类构造函数，生成了两份实例（子类实例将子类原型上的那份屏蔽了）
+
 #### 寄生组合式继承
 
 > 通过**借用构造函数来继承属性，通过原型链的混成**形式来继承方法.
@@ -43,13 +55,13 @@ SubType.prototype.sayAge = function() {
 
 ```javascript
 function inheritPrototype(subType,superType){
-    let prototype=Object.create(superType.prototype)
-    prototype.constructor=subType
-    subType.prototype=prototype
+    let prototype = Object.create(superType.prototype)
+    prototype.constructor = subType
+    subType.prototype = prototype
 }
 function SuperType(name){
-   this.name=name
-   this.colors=["red","blue","green"]
+   this.name = name
+   this.colors = ["red","blue","green"]
 }
 SuperType.prototype.sayName=function(){
    console.log(this.name)
@@ -57,10 +69,10 @@ SuperType.prototype.sayName=function(){
 
 function SubType(name,age){
     SuperType.call(this,name)
-    this.age=age
+    this.age = age
 }
 inheritPrototype(SubType,SuperType)
-SubType.prototype.sayAge=function(){
+SubType.prototype.sayAge = function(){
      console.log(this.age)
 }
 ```
