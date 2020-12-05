@@ -19,7 +19,7 @@
 
 **v-if** 是真正的条件渲染，因为他会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建；也是**惰性的**：因为在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时才会开始渲染条件块。
 
-**v-show** 不管条件是都真假都会渲染，为假时相当于`display: none;`
+**v-show** 不管条件是都真假都会渲染，为假时相当于display: none;
 
 所以，v-if适用于在运行时很少改变条件，不需要频繁切换条件的场景；v-show则适合于需要非常频繁切换条件的场景。
 
@@ -45,12 +45,14 @@ Class可以通过对象语法和数组语法进行动态绑定：
     ```vue
     <div :class="[isActive ? activeClass : '', errorClass]"></div>
     
-    data() {
-        	return {
-        		activeClass: 'active',
-        		errorClass: 'text-danger'
-        	}
-        }
+    ```
+
+data() {
+    	return {
+    		activeClass: 'active',
+    		errorClass: 'text-danger'
+    	}
+    }
     ```
 
 Style也可以通过对象语法和数组语法进行动态绑定
@@ -90,7 +92,7 @@ Style也可以通过对象语法和数组语法进行动态绑定
 
 所有的prop都使其父子 prop 之间形成一个**单项下行绑定**：父级 prop 的更新会向下流动到子组件中，但是反过来不行。这样会防止子组件意外改变父级组件的状态，从而导致应用的数据流难以理解。
 
-其次，每次父级组件发生变化时，子组件所有的 prop 都将会刷新为最新的值。这意味着不应该在一个子组件内部改变 prop 。如果修改，Vue会在浏览器控制台中发出警告。子组件想修改时，只能通过 `$emit` 派发一个自定义事件，父组件收到后，由父组件修改。
+其次，每次父级组件发生变化时，子组件所有的 prop 都将会刷新为最新的值。这意味着不应该在一个子组件内部改变 prop 。如果修改，Vue会在浏览器控制台中发出警告。子组件想修改时，只能通过 $emit 派发一个自定义事件，父组件收到后，由父组件修改。
 
 有两种常见的试图改变一个 prop 的情形：
 
@@ -269,8 +271,8 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 
 2. **`ref` 与 `$parent / $children` 适用 父子组件通信**
 
-    - ` ref `：如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
-    - ` $parent / $children `：访问父 、 子实例
+- ` ref `：如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
+- ` $parent / $children `：访问父 、 子实例
 
 3. **`EventBus （$emit / $on）` 适用于 父子、隔代、兄弟组件通信**
 
@@ -278,8 +280,8 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 
 4. **`$attrs / $listeners` 适用于 隔代组件通信**
 
-    - `$attrs`：包含了父作用域中不被 prop 所识别 (且获取) 的特性绑定 ( class 和 style 除外 )。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 ( class 和 style 除外 )，并且可以通过 `v-bind="$attrs"` 传入内部组件。通常配合 inheritAttrs 选项一起使用。
-    - `$listeners`：包含了父作用域中的 (不含 .native 修饰器的)  v-on 事件监听器。它可以通过 `v-on="$listeners"` 传入内部组件
+- `$attrs`：包含了父作用域中不被 prop 所识别 (且获取) 的特性绑定 ( class 和 style 除外 )。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 ( class 和 style 除外 )，并且可以通过 `v-bind="$attrs"` 传入内部组件。通常配合 inheritAttrs 选项一起使用。
+- `$listeners`：包含了父作用域中的 (不含 .native 修饰器的)  v-on 事件监听器。它可以通过 `v-on="$listeners"` 传入内部组件
 
 5. **`provide / inject` 适用于 隔代组件通信**
 
@@ -289,8 +291,8 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 
    Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。
 
-    - Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
-    - 改变 store 中的状态的唯一途径就是显式地提交  (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
+- Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
+- 改变 store 中的状态的唯一途径就是显式地提交  (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
 
 ### vue-router 中常用的 hash 和 history 路由模式实现原理
 
@@ -310,7 +312,7 @@ hash 路由模式的实现主要是基于下面几个特性：
 
 ##### history 模式的实现原理
 
-> HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：`history.pushState()` 和 `history.repalceState()`。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：
+> HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：history.pushState() 和 history.repalceState()。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：
 >
 > ```javascript
 > window.history.pushState(null, null, path)
