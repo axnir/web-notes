@@ -54,25 +54,26 @@ SubType.prototype.sayAge = function() {
 ##### 实现
 
 ```javascript
-function inheritPrototype(subType,superType){
-    let prototype = Object.create(superType.prototype)
+function inheritPrototype (subType,superType){
+    const prototype = Object.create(superType.prototype)
     prototype.constructor = subType
     subType.prototype = prototype
 }
-function SuperType(name){
+
+function SuperType (name){
    this.name = name
    this.colors = ["red","blue","green"]
 }
-SuperType.prototype.sayName=function(){
+SuperType.prototype.sayName = function(){
    console.log(this.name)
 }
 
-function SubType(name,age){
+function SubType (name, age){
     SuperType.call(this,name)
     this.age = age
 }
 inheritPrototype(SubType,SuperType)
-SubType.prototype.sayAge = function(){
+SubType.prototype.sayAge = function() {
      console.log(this.age)
 }
 ```
