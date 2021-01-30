@@ -65,6 +65,18 @@ this.$router.push({ name: 'user', params: { userId: '123' }})
 this.$router.push({ path: 'register', query: { plan: 'private' }})
 ```
 
+**注意：如果提供了 `path`，`params` 会被忽略，上述例子中的 `query` 并不属于这种情况。取而代之的是下面例子的做法，你需要提供路由的 `name` 或手写完整的带有参数的 `path`：**
+
+```javascript
+const userId = '123'
+router.push({ name: 'user', params: { userId }}) // -> /user/123
+router.push({ path: `/user/${userId}` }) // -> /user/123
+// 这里的 params 不生效
+router.push({ path: '/user', params: { userId }}) // -> /user
+```
+
+同样的规则也适用于 `router-link` 组件的 `to` 属性。
+
 #### 命名路由
 
 > 通过一个名称来标识一个路由显得更方便一些，特别是在链接一个路由，或者是执行一些跳转的时候。
@@ -230,3 +242,17 @@ login() {
 > () => import(/* webpackChunkName: "group-about" */ "../views/About.vue")
 > ```
 
+#### 完整的导航解析流程
+
+1. 导航被触发。
+2. 在失活的组件里调用 `beforeRouteLeave` 守卫。
+3. 调用全局的 `beforeEach` 守卫。
+4. 在重用的组件里调用 `beforeRouteUpdate` 守卫 (2.2+)。
+5. 在路由配置里调用 `beforeEnter`。
+6. 解析异步路由组件。
+7. 在被激活的组件里调用 `beforeRouteEnter`。
+8. 调用全局的 `beforeResolve` 守卫 (2.5+)。
+9. 导航被确认。
+10. 调用全局的 `afterEach` 钩子。
+11. 触发 DOM 更新。
+12. 调用 `beforeRouteEnter` 守卫中传给 `next` 的回调函数，创建好的组件实例会作为回调函数的参数传入。
