@@ -8,11 +8,11 @@
 
    ```javascript
    var name = "windowsName";
-       function a() {
-           var name = "Cherry";
-           console.log(this.name);          // windowsName
-           console.log("inner:" + this);    // inner: Window
-       }
+   function a() {
+       var name = "Cherry";
+       console.log(this.name);          // windowsName
+       console.log("inner:" + this);    // inner: Window
+   }
    a();
    console.log("outer:" + this)         // outer: Window
    ```
@@ -27,12 +27,12 @@
 
    ```javascript
    var name = "windowsName";
-       var a = {
-           name: "Cherry",
-           fn : function () {
-               console.log(this.name);      // Cherry
-           }
+   var a = {
+       name: "Cherry",
+       fn : function () {
+           console.log(this.name);      // Cherry
        }
+   }
    a.fn();
    ```
 
@@ -54,14 +54,12 @@
        this.lastName  = arg2;
    }
    
-   // This    creates a new object
+   // This creates a new object
    var a = new myFunction("Li","Cherry");
    a.lastName; 	// 返回 "Cherry"
    ```
    
    在 `new` 的过程中，我们是使用 `call` 改变了 `this` 的指向
-   
-   参考：[new一个对象发生了什么](./new的实现原理.md)
    
 4. 作为函数方法调用函数（call、apply）
 
@@ -84,7 +82,7 @@
            console.log(this.name);      // windowsName
        }
    }
-   fn()
+   fn();
    ```
 
    这里的 `innerFunction()` 的调用是不是属于第一种调用方式：作为一个函数调用（它就是作为一个函数调用的，没有挂载在任何对象上，所以对于没有挂载在任何对象上的函数，在非严格模式下 this 就是指向 window 的）

@@ -42,8 +42,8 @@
 #### 4.隐藏元素
 
 * `dispaly: none`不占空间
-* `opacity: 0`全透明效果
-* `visibility: hiden`同上
+* `opacity: 0`全透明效果，可触发事件
+* `visibility: hiden`同上，但不可触发事件
 * `overflow: hidden`隐藏溢出部分
 * `z-index: -9999`置于底层
 * `transform: scale(0,0)`缩放元素到0大小，依然占据空间
@@ -108,7 +108,7 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 2. 将动画效果应用到`position`属性为`absolute`或`fixed`的元素上。
 3. 也可以先为元素设置`display: none`，操作结束后再把它显示出来。因为在`display`属性为`none`的元素上进行的DOM操作不会引发回流和重绘
 4. 使用`createDocumentFragment`进行批量的 DOM 操作。
-5. 对于 resize、scroll 等进行防抖/节流处理。
+5. 对于 `resize`、`scroll` 等进行防抖/节流处理。
 6. 避免频繁读取会引发回流/重绘的属性，如果确实需要多次使用，就用一个变量缓存起来。
 7. 利用 CSS3 的`transform`、`opacity`、`filter`这些属性可以实现合成的效果，也就是`GPU`加速。
 
