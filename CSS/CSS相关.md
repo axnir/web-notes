@@ -102,7 +102,7 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 
 重绘过程：由于没有导致 DOM 几何属性的变化，因此元素的位置信息不需要更新，所以当发生重绘的时候，会跳过`生存布局树`和`建立图层树`的阶段，直接到`生成绘制列表`，然后继续进行分块、生成位图等后面一系列操作。
 
-###### **如何避免触发Reflow和Repaint**：
+###### 如何避免触发Reflow和Repaint：
 
 1. 避免频繁使用 style，而是采用修改`class`的方式。
 2. 将动画效果应用到`position`属性为`absolute`或`fixed`的元素上。
@@ -225,3 +225,45 @@ z-index控制重叠元素的叠加顺序，默认为0，值大的在上层，小
 
    因为BFC元素不会影响外部元素的特点，所以BFC元素也可以用来清除浮动的影响，因为如果不清除，子元素浮动则父元素高度塌陷，必然会影响后面元素布局和定位，这显然有违BFC元素的子元素不会影响外部元素的设定。
 
+#### 18. CSS 选择器
+##### 选择器
+（1）id选择器（#myid）
+（2）类选择器（.myclassname）
+（3）标签选择器（div,h1,p）
+（4）后代选择器（h1 p）
+（5）相邻后代选择器（子）选择器（ul>li）
+（6）兄弟选择器（li~a）
+（7）相邻兄弟选择器（li+a）
+（8）属性选择器（a[rel="external"]）
+（9）伪类选择器（a:hover,li:nth-child）
+（10）伪元素选择器（::before、::after）
+（11）通配符选择器（*）
+   
+   ##### CSS 属性选择器 *=, |=, ^=, $=, *= 的区别
+
+1. **attribute 中包含 value:**
+
+* [attribute~=value] 属性中包含独立的单词为 value，例如：
+```html
+[title~=flower]  -->  <img src="/i/eg_tulip.jpg" title="tulip flower" />
+```
+* [attribute*=value] 属性中做字符串拆分，只要能拆出来 value 这个词就行，例如：
+```html
+[title*=flower]   -->  <img src="/i/eg_tulip.jpg" title="ffffflowerrrrrr" />
+```
+2. **attibute 以 value 开头:**
+
+* [attribute|=value] 属性中必须是完整且唯一的单词，或者以 - 分隔开，例如：
+```html
+[lang|=en]     -->  <p lang="en">  <p lang="en-us">
+```
+* [attribute^=value] 属性的前几个字母是 value 就可以，例如：
+```html
+[lang^=en]    -->  <p lang="ennn">
+```
+3. **attribute 以 value 结尾:**
+
+* [attribute$=value] 属性的后几个字母是 value 就可以，例如：
+```html
+a[src$=".pdf"]
+```
