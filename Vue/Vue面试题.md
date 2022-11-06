@@ -1,4 +1,4 @@
-# Vue面试题
+# Vue 面试题
 
 ### 对 SPA 单页面的理解
 
@@ -7,92 +7,73 @@
 ###### 优点
 
 - 用户体验好、快，内容的改变不需要重新加载整个页面，避免不必要的跳转和重复渲染
-- SPA相对对服务器压力小
+- SPA 相对对服务器压力小
 - 前后端职责分离，架构清晰，前端进行交互逻辑，后端负责数据处理
 
 ###### 缺点
-- 初次加载耗时多：为实现单页Web应用功能以及显示效果，需要在加载页面时将JavaScript、CSS统一加载，部分页面按需加载
-- 前进后退路由管理：由于单页应用在一个页面中显示所有内容，所以不能使用路由器前进后退功能，所有页面切换需要自己建立堆栈管理
-- SEO难度大：所有的内容都在一个页面中动态替换显示
 
-###  v-show 与 v-if 有什么区别
+- 初次加载耗时多：为实现单页 Web 应用功能以及显示效果，需要在加载页面时将 JavaScript、CSS 统一加载，部分页面按需加载
+- 前进后退路由管理：由于单页应用在一个页面中显示所有内容，所以不能使用路由器前进后退功能，所有页面切换需要自己建立堆栈管理
+- SEO 难度大：所有的内容都在一个页面中动态替换显示
+
+### v-show 与 v-if 有什么区别
 
 **v-if** 是真正的条件渲染，因为他会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建；也是**惰性的**：因为在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时才会开始渲染条件块。
 
-**v-show** 不管条件是都真假都会渲染，为假时相当于display: none;
+**v-show** 不管条件是都真假都会渲染，为假时相当于 display: none;
 
-所以，v-if适用于在运行时很少改变条件，不需要频繁切换条件的场景；v-show则适合于需要非常频繁切换条件的场景。
+所以，v-if 适用于在运行时很少改变条件，不需要频繁切换条件的场景；v-show 则适合于需要非常频繁切换条件的场景。
 
 ### Class 与 Style 如何动态绑定
 
-Class可以通过对象语法和数组语法进行动态绑定：
+Class 可以通过对象语法和数组语法进行动态绑定：
 
 - 对象语法：
 
   ```vue
   <div :class="{ active: isActive, 'text-danger': hasError }"></div>
-  
-  data() {
-      return {
-  		isActive: true,
-  		hasError: false
-      }
-  }
+
+  data() { return { isActive: true, hasError: false } }
   ```
-  
+
 - 参数语法：
 
-    ```vue
-    <div :class="[isActive ? activeClass : '', errorClass]"></div>
-    
-    ```
+  ```vue
+  <div :class="[isActive ? activeClass : '', errorClass]"></div>
+  ```
 
 data() {
-    	return {
-    		activeClass: 'active',
-    		errorClass: 'text-danger'
-    	}
-    }
-    ```
+return {
+activeClass: 'active',
+errorClass: 'text-danger'
+}
+}
+```
 
-Style也可以通过对象语法和数组语法进行动态绑定
+Style 也可以通过对象语法和数组语法进行动态绑定
 
 - 对象语法：
 
   ```vue
   <div :style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
-  
-  data() {
-  	return {
-  		activeColor: 'red',
-  		fontSize: 30
-  	}
-  }
+
+  data() { return { activeColor: 'red', fontSize: 30 } }
   ```
 
 - 数组语法：
 
   ```vue
   <div :style="[styleColor, styleSize]"></div>
-  
-  data() {
-  	return {
-  		styleColor: {
-  			color: 'red'
-  		},
-  		styleSize: {
-  			fontSize: '30px'
-  		}
-  	}
-  }
+
+  data() { return { styleColor: { color: 'red' }, styleSize: { fontSize: '30px'
+  } } }
   ```
 
+### Vue 单向数据流
 
-### Vue单向数据流
+所有的 prop 都使其父子 prop 之间形成一个**单项下行绑定**：父级 prop 的更新会向下流动到子组件中，但是反过来不行。这样会防止子组件意外改变父级组件的状态，从而导致应用的数据流难以理解。
 
-所有的prop都使其父子 prop 之间形成一个**单项下行绑定**：父级 prop 的更新会向下流动到子组件中，但是反过来不行。这样会防止子组件意外改变父级组件的状态，从而导致应用的数据流难以理解。
-
-其次，每次父级组件发生变化时，子组件所有的 prop 都将会刷新为最新的值。这意味着不应该在一个子组件内部改变 prop 。如果修改，Vue会在浏览器控制台中发出警告。子组件想修改时，只能通过 $emit 派发一个自定义事件，父组件收到后，由父组件修改。
+其次，每次父级组件发生变化时，子组件所有的 prop 都将会刷新为最新的值。这意味着不应该在一个子组件内部改变 prop 。如果修改，Vue 会在浏览器控制台中发出警告。子组件想修改时，只能通过 $emit 派发一个自定义事件，父组件收到后，由父组件修改。
 
 有两种常见的试图改变一个 prop 的情形：
 
@@ -106,7 +87,7 @@ Style也可以通过对象语法和数组语法进行动态绑定
   	}
   }
   ```
-  
+
 - **这个 prop 以一种原始的值传入且需要进行转换**。在这种情况下，最好使用这个 prop 的值来定义一个计算属性：
 
   ```javascript
@@ -120,7 +101,7 @@ Style也可以通过对象语法和数组语法进行动态绑定
 
 ### computed 和 watch 的区别和运用场景
 
->  **computed：**是计算属性，依赖其他属性值，并且 computed 的值有缓存，只有它依赖的属性值发生变化，下一次获取 computed 的值时才会重新计算 computed 的值；
+> **computed：**是计算属性，依赖其他属性值，并且 computed 的值有缓存，只有它依赖的属性值发生变化，下一次获取 computed 的值时才会重新计算 computed 的值；
 >
 > **watch：**更多的是「观察」的作用，类似于某些数据的监听回调，每当监听的数据变化时都会执行回调进行后续操作；
 
@@ -134,25 +115,25 @@ Style也可以通过对象语法和数组语法进行动态绑定
 ###### 运用场景：
 
 - 当需要进行数值计算，并且依赖于其他数据时，应该使用 `computed` ，因为可以利用 `computed` 的缓存特性，避免每次获取值时都需要重复计算；
-- 当需要在数据变化执行时异步或者开销较大的操作时，应该使用 `watch` ,使用 `watch` 允许执行异步操作（访问一个API），限制我们执行该操作的频率，并在得到这个最终结果前，设置中间状态。这些都是计算属性无法做到的。
+- 当需要在数据变化执行时异步或者开销较大的操作时，应该使用 `watch` ,使用 `watch` 允许执行异步操作（访问一个 API），限制我们执行该操作的频率，并在得到这个最终结果前，设置中间状态。这些都是计算属性无法做到的。
 
-### 什么是MVVM
+### 什么是 MVVM
 
-> Model–View–ViewModel （MVVM） 是一个软件架构设计模式，MVVM 源自于经典的 Model–View–Controller（MVC）模式  ，MVVM 的出现促进了前端开发与后端业务逻辑的分离，极大地提高了前端开发效率，MVVM 的核心是 ViewModel 层，它就像是一个中转站（value converter），负责转换 Model 中的数据对象来让数据变得更容易管理和使用，该层向上与视图层进行双向数据绑定，向下与 Model 层通过接口请求进行数据交互，起呈上启下作用。
+> Model–View–ViewModel （MVVM） 是一个软件架构设计模式，MVVM 源自于经典的 Model–View–Controller（MVC）模式 ，MVVM 的出现促进了前端开发与后端业务逻辑的分离，极大地提高了前端开发效率，MVVM 的核心是 ViewModel 层，它就像是一个中转站（value converter），负责转换 Model 中的数据对象来让数据变得更容易管理和使用，该层向上与视图层进行双向数据绑定，向下与 Model 层通过接口请求进行数据交互，起呈上启下作用。
 
-<img src="..\pics\MVVM.jpg" alt="MVVM" style="zoom:60%;" />
+<img src="..\images\MVVM.jpg" alt="MVVM" style="zoom:60%;" />
 
 (1) View 层
 
-​	View 是视图层，也就是用户界面。前端主要由 HTML 和 CSS 来构建 。
+​ View 是视图层，也就是用户界面。前端主要由 HTML 和 CSS 来构建 。
 
-(2) Model层
+(2) Model 层
 
-​	Model 是指数据模型，泛指后端进行的各种业务逻辑处理和数据操控，对于前端来说就是后端提供的 api 接口。
+​ Model 是指数据模型，泛指后端进行的各种业务逻辑处理和数据操控，对于前端来说就是后端提供的 api 接口。
 
-(3) ViewModel层
+(3) ViewModel 层
 
-​	ViewModel 是由前端开发人员组织生成和维护的视图数据层。在这一层，前端开发者对从后端获取的 Model 数据进行转换处理，做二次封装，以生成符合 View 层使用预期的视图数据模型。需要注意的是 ViewModel 所封装出来的数据模型包括视图的状态和行为两部分，而 Model 层的数据模型是只包含状态的，比如页面的这一块展示什么，而页面加载进来时发生什么，点击这一块发生什么，这一块滚动时发生什么这些都属于视图行为（交互），视图状态和行为都封装在了 ViewModel 里。这样的封装使得 ViewModel 可以完整地去描述 View 层。
+​ ViewModel 是由前端开发人员组织生成和维护的视图数据层。在这一层，前端开发者对从后端获取的 Model 数据进行转换处理，做二次封装，以生成符合 View 层使用预期的视图数据模型。需要注意的是 ViewModel 所封装出来的数据模型包括视图的状态和行为两部分，而 Model 层的数据模型是只包含状态的，比如页面的这一块展示什么，而页面加载进来时发生什么，点击这一块发生什么，这一块滚动时发生什么这些都属于视图行为（交互），视图状态和行为都封装在了 ViewModel 里。这样的封装使得 ViewModel 可以完整地去描述 View 层。
 
 ##### 特点：
 
@@ -164,8 +145,8 @@ View 层：
 
 ```html
 <div id="app">
-    <p>{{message}}</p>
-    <button @click="showMessage">Click me</button>
+  <p>{{message}}</p>
+  <button @click="showMessage">Click me</button>
 </div>
 ```
 
@@ -173,27 +154,28 @@ ViewModel 层：
 
 ```javascript
 let app = new Vue({
-    el: '#app',
-    data: { //用来描述视图状态
-        message: 'Hello Vue!'
+  el: '#app',
+  data: {
+    //用来描述视图状态
+    message: 'Hello Vue!',
+  },
+  methods: {
+    showMesssage() {
+      alert(this.message);
     },
-    methods: {
-        showMesssage () {
-            alert(this.message)
-        }
-    },
-    created () {
-        ajax({
-            url: '/server/api',
-            success (res) {
-                this.message = res
-            }
-        })
-    }
-})
+  },
+  created() {
+    ajax({
+      url: '/server/api',
+      success(res) {
+        this.message = res;
+      },
+    });
+  },
+});
 ```
 
-Model层：
+Model 层：
 
 ```javascript
 {
@@ -210,28 +192,28 @@ Model层：
 
 > Vue 实例有一个完整的生命周期，也就是从开始创建、初始化数据、编译模版、挂载 Dom -> 渲染、更新 -> 渲染、卸载等一系列过程，我们称这是 Vue 的生命周期。
 
-| 生命周期钩子  |                           组件状态                           |                          最佳实践                           |
-| :-----------: | :----------------------------------------------------------: | :---------------------------------------------------------: |
-| beforeCreate  | 实例初始化后，this指向创建的实例，不能访问到data、computed、watch、methods上的方法和数据 |                  常用于初始化非响应式变量                   |
-|    created    | 实例创建完成，可访问methods、data、computed、watch上的方法和数据，未挂载到DOM，不能访问$el属性，$ref属性内容为空数组 |               用于页面初始化，简单的ajax请求                |
-|  beforeMount  | 在挂载开始之前被调用，beforeMount之前，会找到对应的template，并编译成render函数 |                              -                              |
-|    mounted    | 实例挂载到DOM上，此时可以通过DOM API获取到DOM节点，$ref属性可以访问 |             常用于获取VNode信息和操作，ajax请求             |
-| beforeUpdate  |        响应式数据更新时调用，发生在虚拟DOM打补丁之前         | 适合在更新之前访问现有的DOM，比如手动移除已添加的事件监听器 |
-|    updated    | 虚拟 DOM 重新渲染和打补丁之后调用，组件DOM已经更新，可执行依赖于DOM的操作 |        避免在这个钩子函数中操作数据，可能陷入死循环         |
-|   activated   |              keep-alive 专属，组件被激活时调用               |                              -                              |
-|  deactivated  |              keep-alive 专属，组件被销毁时调用               |                              -                              |
-| beforeDestroy | 实例销毁之前调用。这一步，实例仍然完全可用，this仍能获取到实例 |     常用于销毁定时器、解绑全局事件、销毁插件对象等操作      |
-|   destroyed   | 实例销毁后调用，调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁 |                              -                              |
+| 生命周期钩子  |                                                         组件状态                                                         |                           最佳实践                           |
+| :-----------: | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------: |
+| beforeCreate  |               实例初始化后，this 指向创建的实例，不能访问到 data、computed、watch、methods 上的方法和数据                |                   常用于初始化非响应式变量                   |
+|    created    | 实例创建完成，可访问 methods、data、computed、watch 上的方法和数据，未挂载到 DOM，不能访问$el属性，$ref 属性内容为空数组 |               用于页面初始化，简单的 ajax 请求               |
+|  beforeMount  |                   在挂载开始之前被调用，beforeMount 之前，会找到对应的 template，并编译成 render 函数                    |                              -                               |
+|    mounted    |                        实例挂载到 DOM 上，此时可以通过 DOM API 获取到 DOM 节点，$ref 属性可以访问                        |            常用于获取 VNode 信息和操作，ajax 请求            |
+| beforeUpdate  |                                     响应式数据更新时调用，发生在虚拟 DOM 打补丁之前                                      | 适合在更新之前访问现有的 DOM，比如手动移除已添加的事件监听器 |
+|    updated    |                      虚拟 DOM 重新渲染和打补丁之后调用，组件 DOM 已经更新，可执行依赖于 DOM 的操作                       |         避免在这个钩子函数中操作数据，可能陷入死循环         |
+|   activated   |                                            keep-alive 专属，组件被激活时调用                                             |                              -                               |
+|  deactivated  |                                            keep-alive 专属，组件被销毁时调用                                             |                              -                               |
+| beforeDestroy |                             实例销毁之前调用。这一步，实例仍然完全可用，this 仍能获取到实例                              |      常用于销毁定时器、解绑全局事件、销毁插件对象等操作      |
+|   destroyed   |        实例销毁后调用，调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁        |                              -                               |
 
 **注意**
 
-1. `created`阶段的ajax请求与`mounted`请求的区别：前者页面视图未出现，如果请求信息过多，页面会长时间处于白屏状态。
+1. `created`阶段的 ajax 请求与`mounted`请求的区别：前者页面视图未出现，如果请求信息过多，页面会长时间处于白屏状态。
 
 2. `mounted` 不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用`vm.nextTick`。
 
-3. Vue2.0 之后主动调用 `$destroy()` 不会移除dom节点，作者不推荐直接 `destroy` 这种做法，如果实在需要这样用可以在这个生命周期钩子中手动移除dom节点。
+3. Vue2.0 之后主动调用 `$destroy()` 不会移除 dom 节点，作者不推荐直接 `destroy` 这种做法，如果实在需要这样用可以在这个生命周期钩子中手动移除 dom 节点。
 
-<img src="..\pics\vue生命周期.png" alt="Vue生命周期" style="zoom:30%;" />
+<img src="..\images\vue生命周期.png" alt="Vue生命周期" style="zoom:30%;" />
 
 ### Vue 的父组件和子组件生命周期钩子函数执行顺序
 
@@ -253,7 +235,7 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 
   父 beforeDestroy -> 子 beforeDestroy -> 子 destroyed -> 父 destroyed
 
-### 组件的keep-alive
+### 组件的 keep-alive
 
 > keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，避免重新渲染。
 
@@ -267,12 +249,12 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 
 > Vue 组件间通信只要指以下 3 类通信：父子组件通信、隔代组件通信、兄弟组件通信。
 
-1. **` props / $emit `适用 父子组件通信 **
+1. **`props / $emit`适用 父子组件通信 **
 
 2. **`ref` 与 `$parent / $children` 适用 父子组件通信**
 
-- ` ref `：如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
-- ` $parent / $children `：访问父 、 子实例
+- `ref`：如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
+- `$parent / $children`：访问父 、 子实例
 
 3. **`EventBus （$emit / $on）` 适用于 父子、隔代、兄弟组件通信**
 
@@ -281,7 +263,7 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 4. **`$attrs / $listeners` 适用于 隔代组件通信**
 
 - `$attrs`：包含了父作用域中不被 prop 所识别 (且获取) 的特性绑定 ( class 和 style 除外 )。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 ( class 和 style 除外 )，并且可以通过 `v-bind="$attrs"` 传入内部组件。通常配合 inheritAttrs 选项一起使用。
-- `$listeners`：包含了父作用域中的 (不含 .native 修饰器的)  v-on 事件监听器。它可以通过 `v-on="$listeners"` 传入内部组件
+- `$listeners`：包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。它可以通过 `v-on="$listeners"` 传入内部组件
 
 5. **`provide / inject` 适用于 隔代组件通信**
 
@@ -292,7 +274,7 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
    Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。
 
 - Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
-- 改变 store 中的状态的唯一途径就是显式地提交  (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
+- 改变 store 中的状态的唯一途径就是显式地提交 (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
 
 ### vue-router 中常用的 hash 和 history 路由模式实现原理
 
@@ -304,9 +286,9 @@ hash 路由模式的实现主要是基于下面几个特性：
 
 - URL 中 hash 值只是客户端的一种状态，也就是说当向服务器端发出请求时，hash 部分不会被发送；
 
-- hash 值的改变，都会在浏览器的访问历史中增加一个记录。因此我们能通过浏览器的回退、前进按钮控制hash 的切换；
+- hash 值的改变，都会在浏览器的访问历史中增加一个记录。因此我们能通过浏览器的回退、前进按钮控制 hash 的切换；
 
-- 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用  JavaScript 来对 loaction.hash 进行赋值，改变 URL 的 hash 值；
+- 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用 JavaScript 来对 loaction.hash 进行赋值，改变 URL 的 hash 值；
 
 - 可以使用 hashchange 事件来监听 hash 值的变化，从而对页面进行跳转（渲染）。
 
@@ -315,15 +297,15 @@ hash 路由模式的实现主要是基于下面几个特性：
 > HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：history.pushState() 和 history.repalceState()。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：
 >
 > ```javascript
-> window.history.pushState(null, null, path)
-> window.history.replaceState(null, null, path)
+> window.history.pushState(null, null, path);
+> window.history.replaceState(null, null, path);
 > ```
 
 history 路由模式的实现主要基于存在下面几个特性：
 
-- ` pushState ` 和 ` repalceState ` 两个 API 来操作实现 URL 的变化 ；
-- 我们可以使用 ` popstate `  事件来监听 url 的变化，从而对页面进行跳转（渲染）；
-- ` history.pushState() ` 或 ` history.replaceState() ` 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）。
+- `pushState` 和 `repalceState` 两个 API 来操作实现 URL 的变化 ；
+- 我们可以使用 `popstate` 事件来监听 url 的变化，从而对页面进行跳转（渲染）；
+- `history.pushState()` 或 `history.replaceState()` 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）。
 
 ### 虚拟 DOM 的优缺点
 
@@ -337,15 +319,15 @@ history 路由模式的实现主要基于存在下面几个特性：
 
 - **无法进行极致优化：** 虽然虚拟 DOM + 合理的优化，足以应对绝大部分应用的性能需求，但在一些性能要求极高的应用中虚拟 DOM 无法进行针对性的极致优化。
 
-### 为什么Vue组件的data是个函数
+### 为什么 Vue 组件的 data 是个函数
 
-​	Vue组件可能存在多个实例，如果使用对象形式定义 `data`，则会导致它们共用一个 `data` 对象，那么状态变更将会影响所有组件实例，这是不合理的；采用函数形式定义，在 `initData` 时会将其作为工厂函数返回全新 `data` 对象，有效规避多实例之间状态污染问题。而在Vue根实例创建过程中则不存在该限制，也是因为根实例只能有一个，不需要担心这种情况。
+​ Vue 组件可能存在多个实例，如果使用对象形式定义 `data`，则会导致它们共用一个 `data` 对象，那么状态变更将会影响所有组件实例，这是不合理的；采用函数形式定义，在 `initData` 时会将其作为工厂函数返回全新 `data` 对象，有效规避多实例之间状态污染问题。而在 Vue 根实例创建过程中则不存在该限制，也是因为根实例只能有一个，不需要担心这种情况。
 
-### Vue中key的作用
+### Vue 中 key 的作用
 
-> key是给每一个vnode的唯一id,可以`依靠key`,更`准确`, 更`快`的拿到oldVnode中对应的vnode节点。
+> key 是给每一个 vnode 的唯一 id,可以`依靠key`,更`准确`, 更`快`的拿到 oldVnode 中对应的 vnode 节点。
 
-1. 若不设置key还可能在列表更新时引发一些隐蔽的bug
+1. 若不设置 key 还可能在列表更新时引发一些隐蔽的 bug
 
 2. **更准确**
 
@@ -353,6 +335,6 @@ history 路由模式的实现主要基于存在下面几个特性：
 
 3. ##### 更快
 
-   利用key的唯一性生成map对象来获取对应节点，比遍历方式更快。key 的作用主要是为了高效的更新虚拟DOM，其原理是 vue 在 patch 过程中通过 key 可以精准判断两个节点是否是同一个，从而避免频繁更新不同元素，使得整个patch过程更加高效，减少DOM操作量，提高性能。
+   利用 key 的唯一性生成 map 对象来获取对应节点，比遍历方式更快。key 的作用主要是为了高效的更新虚拟 DOM，其原理是 vue 在 patch 过程中通过 key 可以精准判断两个节点是否是同一个，从而避免频繁更新不同元素，使得整个 patch 过程更加高效，减少 DOM 操作量，提高性能。
 
-[^1]:如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素
+[^1]: 如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素
